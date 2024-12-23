@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="todo-app">
+        <h1>Todo List</h1>
+        <div class="input-container">
+        <input type="text" placeholder="Add a new todo" />
+        <button onclick="addTodo()">ADD TODO!</button>
+    </div>
+    <div id="todos"></div>
+    </div>
+
+<script>
+    let todos = [];
+    function addTodo() {
+        todos.push({
+        title: document.querySelector("input").value,
+        });
+        render();
+    }
+
+    function render() {
+        document.querySelector("#todos").innerHTML = "";
+        for (let i = 0; i < todos.length; i++) {
+        const todo = todos[i];
+        const element = document.createElement("div");
+        const h1 = document.createElement("h1");
+        const button = document.createElement("button");
+        button.innerHTML = "DELETE";
+        button.onclick = (function (index) {
+            return function () {
+            deleteTodo(index);
+            };
+        })(i);
+
+        h1.innerHTML = (i + 1) + ". " + todo.title;
+        element.append(h1);
+        element.append(button);
+        document.querySelector("#todos").appendChild(element);
+        }
+    }
+    function deleteTodo(index) {
+        todos.splice(index, 1);
+        render();
+    }
+ </script>
+</body>
+</html>
